@@ -1,12 +1,13 @@
 {
-  "name": "testpilot-containers",
-  "title": "Multi-Account Containers",
-  "description": "Containers helps you keep all the parts of your online life contained in different tabs. Custom labels and color-coded tabs help keep different activities — like online shopping, travel planning, or checking work email — separate.",
+  "name": "evisit-testpilot-containers",
+  "title": "eVisit Multi-Account Containers",
+  "description": "This is an eVisit specific fork of Multi-Account Containers that intends to support intelligent auto-containerization of our AWS SSO page, so that oncall engineers are not running 4 different browsers/incognitos",
   "version": "8.1.0",
-  "author": "Andrea Marchesini, Luke Crouch, Lesley Norton, Kendall Werts, Maxx Crawford, Jonathan Kingston",
+  "author": "Andrea Marchesini, Luke Crouch, Lesley Norton, Kendall Werts, Maxx Crawford, Jonathan Kingston, Phillip Huff",
   "bugs": {
-    "url": "https://github.com/mozilla/multi-account-containers/issues"
+    "url": "https://github.com/phroph/evisit-multi-account-containers/issues"
   },
+  "type": "module",
   "dependencies": {},
   "devDependencies": {
     "addons-linter": "^3.23.0",
@@ -28,12 +29,12 @@
     "web-ext": "^7.1.1",
     "webextensions-jsdom": "^1.2.1"
   },
-  "homepage": "https://github.com/mozilla/multi-account-containers#readme",
+  "homepage": "https://github.com/phroph/evisit-multi-account-containers#readme",
   "license": "MPL-2.0",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mozilla/multi-account-containers.git"
+    "url": "git+https://github.com/phroph/evisit-multi-account-containers.git"
   },
   "scripts": {
     "dev": "web-ext run -s src/",
@@ -42,7 +43,7 @@
     "lint:css": "stylelint src/css/*.css",
     "lint:html": "htmllint *.html",
     "lint:js": "eslint .",
-    "package": "rm -rf src/web-ext-artifacts && npm run build && mv src/web-ext-artifacts/firefox_multi-account_containers-*.zip addon.xpi",
+    "package": "rm -rf src/web-ext-artifacts && npm run build && mv src/web-ext-artifacts/evisit_firefox_multi-account_containers-*.zip addon.xpi",
     "test": "npm run lint && npm run coverage",
     "test:once": "mocha test/**/*.test.js",
     "test:watch": "npm run test:once -- --watch",

@@ -1,14 +1,14 @@
 {
   "manifest_version": 2,
-  "name": "Firefox Multi-Account Containers",
-  "version": "8.1.0",
+  "name": "eVisit Firefox Multi-Account Containers",
+  "version": "1.0.0",
   "incognito": "not_allowed",
-  "description": "__MSG_extensionDescription__",
+  "description": "This is an eVisit specific fork of Multi-Account Containers that intends to support intelligent auto-containerization of our AWS SSO page, so that oncall engineers are not running 4 different browsers/incognitos",
   "icons": {
     "48": "img/container-site-d-48.png",
     "96": "img/container-site-d-96.png"
   },
-  "homepage_url": "https://github.com/mozilla/multi-account-containers#readme",
+  "homepage_url": "https://github.com/phroph/evisit-multi-account-containers#readme",
   "permissions": [
     "<all_urls>",
     "activeTab",
@@ -22,7 +22,8 @@
     "unlimitedStorage",
     "tabs",
     "webRequestBlocking",
-    "webRequest"
+    "webRequest",
+    "https://d-9a672d9160.awsapps.com/start#/"
   ],
   "optional_permissions": [
     "bookmarks",

@@ -180,7 +180,60 @@ const messageHandler = {
       this.onFocusChangedCallback(windowId);
     });
 
-    browser.webRequest.onCompleted.addListener((details) => {
+    browser.webRequest.onBeforeRequest.addListener(async (details) => {
+      const colors = [
+        "blue",
+        "turquoise",
+        "green",
+        "yellow",
+        "orange",
+        "red",
+        "pink",
+        "purple",
+      ]
+      const icons = [
+        "fingerprint",
+        "briefcase",
+        "dollar",
+        "cart",
+        "circle",
+        "gift",
+        "vacation",
+        "food",
+        "fruit",
+        "pet",
+        "tree",
+        "chill",
+        "fence",
+      ]
+      const tab = (await browser.tabs.query({active: true, windowId: browser.windows.WINDOW_ID_CURRENT}))[0] // retrieve the current tab
+      if (tab.cookieStoreId != "firefox-default") {
+        return; // Prevent infinite looping by never processing a container tab
+      }
+      const { hostOnly, session, ...cookie } = (await browser.cookies.getAll({name: "x-amz-sso_authn"}))[0] // get the sso cookie, strip out unneeded info
+      const url = details.url;
+      const accountId = (url.split("custom/")[1]).substring(0,12);
+      const identity = await backgroundLogic.createOrUpdateContainer({
+        userContextId: "new",
+        params: {
+          name: accountId,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          icon: icons[Math.floor(Math.random() * icons.length)],
+        },
+      }) // create a new contextual identity store
+      browser.cookies.set({
+        ...cookie,
+        url: "https://d-9a672d9160.awsapps.com/start#/",
+        storeId: identity.cookieStoreId,
+      }) // Add our sso cookie into our new store
+      await backgroundLogic.openNewTab({
+        url,
+        userContextId: backgroundLogic.getUserContextIdFromCookieStoreId(identity.cookieStoreId),
+      }) // Create new tab associated with this contextual identity store
+      await browser.tabs.remove(tab.id) // Close current tab (prevents "double-tabbing")
+    }, {urls: ["https://d-9a672d9160.awsapps.com/start/#/saml/custom/*"]}, ["blocking"])
+
+    browser.webRequest.onCompleted.addListener(async (details) => {
       if (details.frameId !== 0 || details.tabId === -1) {
         return {};
       }
